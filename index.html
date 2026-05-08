@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Ribeye&display=swap" rel="stylesheet">
-    <title>Dashboard - DogBuddy</title>
+    <title>ZampaViva</title>
+    <link rel="icon" type="image/png" href="images/impronta_titolo.png">
     <style>
         :root {
             --sidebar-width: 260px;
@@ -199,14 +200,24 @@
 
         .top-bar-title {
             position: absolute;
-            /* Centra il titolo rispetto alla barra intera, non rispetto agli altri elementi */
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%); 
-            font-weight: 800;
-            font-size: 1.4rem;
+            transform: translate(-50%, -50%);
+            font-family: 'Ribeye', cursive;
+            font-size: 1.8rem;
             color: var(--text-dark);
-            white-space: nowrap; /* Impedisce al titolo di andare a capo */
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Spazio tra la tua foto e il testo */
+            white-space: nowrap;
+        }
+
+        .brand-img {
+            height: 40px; /* Regola l'altezza per farla stare bene nella barra */
+            width: auto;  /* Mantiene le proporzioni originali */
+            object-fit: contain;
+            /* Se la tua impronta è colorata e la vuoi nera, puoi scommentare la riga sotto: */
+            /* filter: grayscale(100%) brightness(0); */
         }
 
         /* Stile per la scritta Menu nella sidebar */
@@ -354,12 +365,17 @@
 
 <main>
     <div class="top-bar">
-        <div class="top-bar-title">DogSitter Giulsu</div>
-        <div class="user-profile" onclick="toggleAuth()">
-            <span id="user-display-name">Ospite (Clicca per Login)</span>
-            <img src="https://via.placeholder.com/40" alt="Profilo" class="user-avatar" id="user-img">
-        </div>
+    <!-- Titolo centrale con la tua immagine personalizzata -->
+    <div class="top-bar-title">
+        <img src="images/impronta_titolo.png" alt="Logo Zampa" class="brand-img">
+        <span>ZampaViva</span> 
     </div>
+
+    <div class="user-profile" onclick="toggleAuth()">
+        <span id="user-display-name">Ospite (Clicca per Login)</span>
+        <img src="https://via.placeholder.com/40" alt="Profilo" class="user-avatar" id="user-img">
+    </div>
+</div>
 
     <div id="content-wrapper">
         <!-- PAGINA: DASHBOARD -->
