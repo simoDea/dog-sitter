@@ -9,14 +9,14 @@
         :root {
             --sidebar-width: 260px;
             --topbar-height: 70px;
-            --primary: #6366f1;
+            --primary:rgb(212, 70, 146);
             --bg-dash: #f1f5f9;
         }
 
         body {
             margin: 0;
             display: flex;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', monospace;
             background-color: var(--bg-dash);
         }
 
@@ -33,9 +33,9 @@
         }
 
         nav ul { list-style: none; padding: 0; margin-top: 40px; }
-        nav li { padding: 15px; border-radius: 8px; cursor: pointer; color: #64748b; margin-bottom: 5px; }
-        nav li:hover { background: #f8fafc; color: var(--primary); }
-        nav li.active { background: var(--primary); color: white; }
+        nav li { padding: 15px; border-radius: 8px; cursor: pointer; color: black; margin-bottom: 5px; }
+        nav li:hover { background: #f8fafc; color: black; }
+        nav li.active { background: var(--primary); color: black; }
 
         /* Contenuto Principale */
         main {
@@ -88,7 +88,7 @@
 <body>
 
 <aside>
-    <div style="font-weight: 800; color: var(--primary); font-size: 1.2rem;">DogSitter Giulsu</div>
+    <div style="font-weight: 800; color: black; font-size: 1.2rem;">DogSitter Giulsu</div>
     <nav>
         <ul>
             <li class="active">Dashboard</li>
