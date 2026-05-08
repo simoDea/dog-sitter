@@ -9,20 +9,23 @@
         :root {
             --sidebar-width: 260px;
             --topbar-height: 70px;
-            --primary:rgb(212, 70, 146);
+            --primary: rgb(212, 70, 146);
             --bg-dash: #f1f5f9;
+            --text-dark: #1e293b;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
             display: flex;
-            font-family: 'Inter', monospace;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-dash);
             height: 100vh;
-            overflow: hidden; 
+            overflow: hidden;
         }
 
-        /* Sidebar sinistra */
+        /* Sidebar */
         aside {
             width: var(--sidebar-width);
             height: 100vh;
@@ -32,21 +35,36 @@
             flex-direction: column;
             padding: 20px;
             position: fixed;
+            z-index: 10;
         }
 
-        nav ul { list-style: none; padding: 0; margin-top: 40px; }
-        nav li { padding: 15px; border-radius: 8px; cursor: pointer; color: black; margin-bottom: 5px; }
-        nav li:hover { background: #f8fafc; color: black; }
-        nav li.active { background: var(--primary); color: black; }
+        .logo { font-weight: 800; color: black; font-size: 1.2rem; margin-bottom: 30px; }
 
-        /* Contenuto Principale */
+        nav ul { list-style: none; padding: 0; }
+        nav li { 
+            padding: 12px 15px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            color: #64748b; 
+            margin-bottom: 8px; 
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        nav li i { width: 20px; }
+        nav li:hover { background: #fff1f7; color: var(--primary); }
+        nav li.active { background: var(--primary); color: white; }
+
+        /* Main Content Area */
         main {
             margin-left: var(--sidebar-width);
             width: calc(100% - var(--sidebar-width));
-            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Barra superiore */
         .top-bar {
             height: var(--topbar-height);
             background: white;
@@ -57,86 +75,184 @@
             border-bottom: 1px solid #e2e8f0;
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #eee; }
+
+        /* Contenuto dinamico */
+        #content-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
         }
 
-        .user-name { font-weight: 600; font-size: 0.9rem; }
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #cbd5e1; /* Segnaposto foto */
-            object-fit: cover;
-        }
-
-        .default-user-icon{
-            width:40px;
-            height:40px;
-            border-radius:50%;
-            background:#ddd;
-            align-items:center;
-            justify-content:center;
-            font-size:18px;
-        }      
-
-        /* AREA CONTENUTO: Zero padding per far toccare l'immagine */
-        .content-area {
-            height: calc(100vh - var(--topbar-height));
+        .page-content {
             width: 100%;
-            padding: 0;         /* RIMOSSO il padding per eliminare i bordi vuoti */
-            overflow: hidden;
+            height: 100%;
+            display: none; /* Nascosti di default */
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page-content.active { display: flex; flex-direction: column; }
+
+        /* Stile Immagine Full */
+        .full-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Centro Messaggio Errore/Login */
+        .login-placeholder {
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            padding: 20px;
         }
 
-        /* Immagine: Forza il riempimento totale */
-        .main-hero-img {
-            width: 100%;        /* Prende tutta la larghezza */
-            height: 100%;       /* Prende tutta l'altezza */
-            object-fit: cover;  /* Copre tutto lo spazio (taglia millimetricamente i bordi se necessario per non deformarsi) */
-            border-radius: 0;   /* Se vuoi che tocchi i bordi perfettamente, metti 0. Se vuoi l'effetto card, lascia pure 24px */
-            box-shadow: none;   /* In modalità full-screen l'ombra non serve più */
+        .btn-accedi {
+            background: var(--primary);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(212, 70, 146, 0.3);
+            transition: transform 0.2s;
         }
+        .btn-accedi:hover { transform: scale(1.05); }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
 <aside>
-    <div style="font-weight: 800; color: black; font-size: 1.2rem;">DogSitter Giulsu</div>
+    <div class="logo">DogSitter Giulsu</div>
     <nav>
         <ul>
-            <li class="active">Dashboard</li>
-            <li>Home</li>
-            <li>Prenotazioni</li>
-            <li>Messaggi</li>
-            <li>Impostazioni</li>
+            <li onclick="showPage('home')" id="menu-home"> 
+                <i class="fa-solid fa-house"></i> Home
+            </li>
+            <li onclick="showPage('dashboard')" id="menu-dashboard" class="active">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </li>
+            <li onclick="showPage('prenotazioni')" id="menu-prenotazioni">
+                <i class="fa-solid fa-calendar-check"></i> Prenotazioni
+            </li>
+            <li onclick="showPage('messaggi')" id="menu-messaggi">
+                <i class="fa-solid fa-envelope"></i> Messaggi
+            </li>
+            <li onclick="showPage('impostazioni')" id="menu-impostazioni">
+                <i class="fa-solid fa-gear"></i> Impostazioni
+            </li>
         </ul>
     </nav>
 </aside>
 
 <main>
     <div class="top-bar">
-        <div class="user-profile">
-            <span class="user-name">Mario Rossi</span>
-            <img 
-                src="https://via.placeholder.com/40"
-                alt="Foto Profilo"
-                class="user-avatar"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
-
-            <i class="fa-solid fa-user default-user-icon" style="display:none;"></i>
+        <div class="user-profile" onclick="toggleAuth()">
+            <span id="user-display-name">Ospite (Clicca per Login)</span>
+            <img src="https://via.placeholder.com/40" alt="Profilo" class="user-avatar" id="user-img">
         </div>
     </div>
 
-    <div class="content-area">
-        <!-- IMMAGINE FULL-SPACE -->
-        <img src="images/immagine_cane_orecchie_all_aria.jpeg" alt="Benvenuto sulla Dashboard" class="main-hero-img">
+    <div id="content-wrapper">
+        <!-- PAGINA: DASHBOARD -->
+        <div id="page-dashboard" class="page-content active">
+            <img src="images/immagine_cane_orecchie_all_aria.jpeg" alt="Cane" class="full-img">
+        </div>
+
+        <!-- PAGINA: HOME -->
+        <div id="page-home" class="page-content" style="padding: 40px;">
+            <h1>Benvenuto nella Home</h1>
+            <p>Qui troverai le ultime notizie dal mondo DogSitter.</p>
+        </div>
+
+        <!-- PAGINA: PRENOTAZIONI (Con controllo accesso) -->
+        <div id="page-prenotazioni" class="page-content">
+            <div id="prenotazioni-protette" class="login-placeholder">
+                <i class="fa-solid fa-lock" style="font-size: 50px; color: #cbd5e1; margin-bottom: 20px;"></i>
+                <h2>Area Riservata</h2>
+                <p>Per visualizzare le tue prenotazioni devi prima effettuare l'accesso.</p>
+                <a href="#" class="btn-accedi" onclick="simulaLogin()">Accedi Ora</a>
+            </div>
+            <div id="prenotazioni-lista" style="display:none; padding: 40px;">
+                <h1>Le tue prenotazioni</h1>
+                <p>Nessuna prenotazione attiva al momento.</p>
+            </div>
+        </div>
+
+        <!-- PAGINA: MESSAGGI -->
+        <div id="page-messaggi" class="page-content" style="padding: 40px; align-items: center; justify-content: center;">
+            <i class="fa-solid fa-comments" style="font-size: 40px; color: var(--primary);"></i>
+            <p>Non hai ancora messaggi dai sitter.</p>
+        </div>
+
+        <!-- PAGINA: IMPOSTAZIONI -->
+        <div id="page-impostazioni" class="page-content" style="padding: 40px;">
+            <h1>Impostazioni</h1>
+            <p>Gestisci il tuo profilo e le notifiche.</p>
+        </div>
     </div>
 </main>
 
+<script>
+    // Stato dell'utente (Falso di default)
+    let isLogged = false;
+
+    function showPage(pageId) {
+        // Rimuove classe active da tutti i menu
+        document.querySelectorAll('nav li').forEach(li => li.classList.remove('active'));
+        // Nasconde tutte le pagine
+        document.querySelectorAll('.page-content').forEach(div => div.classList.remove('active'));
+
+        // Attiva menu e pagina selezionata
+        document.getElementById('menu-' + pageId).classList.add('active');
+        document.getElementById('page-' + pageId).classList.add('active');
+
+        // Controllo speciale per prenotazioni
+        if (pageId === 'prenotazioni') {
+            checkPrenotazioniAccess();
+        }
+    }
+
+    function checkPrenotazioniAccess() {
+        const locked = document.getElementById('prenotazioni-protette');
+        const list = document.getElementById('prenotazioni-lista');
+        
+        if (isLogged) {
+            locked.style.display = 'none';
+            list.style.display = 'block';
+        } else {
+            locked.style.display = 'flex';
+            list.style.display = 'none';
+        }
+    }
+
+    function simulaLogin() {
+        isLogged = true;
+        document.getElementById('user-display-name').innerText = "Mario Rossi";
+        document.getElementById('user-img').src = "https://i.pravatar.cc/150?u=mario";
+        alert("Login effettuato con successo!");
+        showPage('prenotazioni'); // Ricarica la vista
+    }
+
+    function toggleAuth() {
+        if(isLogged) {
+            isLogged = false;
+            document.getElementById('user-display-name').innerText = "Ospite (Clicca per Login)";
+            document.getElementById('user-img').src = "https://via.placeholder.com/40";
+            alert("Logout effettuato.");
+            showPage('dashboard');
+        } else {
+            simulaLogin();
+        }
+    }
+</script>
+
 </body>
 </html>
-
