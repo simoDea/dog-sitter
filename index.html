@@ -273,6 +273,58 @@
             flex: 1.2;
             padding: 40px; /* Aggiunto respiro intorno al testo */
         }
+
+        /* Titolo e Testo nel Box Servizi */
+        .box-title {
+            font-family: 'Ribeye', cursive;
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        .box-services {
+            font-family: 'Kalam', cursive;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #475569;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .box-services li {
+            margin-bottom: 12px;
+            padding-left: 35px; /* Spazio generoso per la zampa singola */
+            position: relative;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        /* Usiamo FontAwesome per una zampa singola perfetta */
+        .box-services li::before {
+            content: "\f1b0"; /* Codice per una zampa singola in FontAwesome */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 3px; /* La allinea bene alla prima riga di testo */
+            font-size: 1rem;
+            color: #000000; /* Nero assoluto */
+        }
+
+        /* Posizionamento Bottone in basso a destra */
+        .btn-bottom-right {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            margin-top: 0; /* Rimuove margini extra */
+        }
+
+        /* Alzare il box del cane */
+        .dog-wrapper {
+            transform: translateY(-30px); /* Sposta tutto il gruppo verso l'alto */
+        }
     </style>
 </head>
 <body>
@@ -315,53 +367,47 @@
             <h1>Benvenuto nella Dashboard</h1>
         </div>
 
-        <!-- PAGINA: HOME -->
         <div id="page-home" class="page-content active" style="background-color: #F6C7C7;">
             <div class="home-container">
-                <!-- Metà Sinistra: Presentazione Easy -->
+                <!-- Metà Sinistra -->
                 <div class="home-left">
                     <h1 class="home-title">Trasformate la vostra vita insieme verso un equilibrio perfetto</h1>
-                    
                     <div class="home-text-content">
                         <p>
                             Mi chiamo <strong>Giulia</strong>, sono un addestratrice cinofila certificata <strong>ENCI</strong> e vivo a Sesto San Giovanni. 
                             La mia missione è mettere la mia competenza al servizio del benessere dei nostri amici a quattro zampe e dei loro proprietari.
                         </p>
-
                         <p>
-                            Credo fermamente che la cinofilia sia una questione di equilibrio. Amo dedicare il tempo a lunghe passeggiate esplorative e al gioco all'aria aperta, ma sono convinta che la vera armonia nasca tra le mura domestiche. Se il tuo obiettivo è insegnare a te e al tuo cane a comunicare al meglio, trasformeremo la convivenza quotidiana in un percorso sereno e in un piacere condiviso.
+                            Credo fermamente che la cinofilia sia una questione di equilibrio. Amo dedicare il tempo a lunghe passeggiate esplorative e al gioco all'aria aperta, ma sono convinta che la vera armonia nasca tra le mura domestiche.
                         </p>
-
                         <p>
                             Per garantirti la massima trasparenza, ho creato questo spazio dove potrai seguire passo dopo passo la crescita del tuo cucciolo. Nella tua <strong>area personale</strong> troverai:
                         </p>
-
                         <ul class="home-list">
                             <li><strong>Pagelline:</strong> per monitorare i progressi e i voti di ogni lezione.</li>
                             <li><strong>Galleria:</strong> con le foto delle nostre avventure.</li>
-                            <li><strong>Prenotazioni:</strong> un calendario sempre aggiornato per le nostre sessioni.</li>
+                            <li><strong>Prenotazioni:</strong> un calendario sempre aggiornato.</li>
                         </ul>
                     </div>
-
-                    <button onclick="showPage('prenotazioni')" class="btn-accedi" style="margin-top: 10px;">Inizia il percorso</button>
                 </div>
 
-                <!-- Metà Destra: Immagine + Box Info -->
+                <!-- Metà Destra -->
                 <div class="home-right">
-                    <div class="dog-wrapper">
-                        <!-- Immagine che spunta -->
+                    <div class="dog-wrapper" style="margin-bottom: 20px;"> <!-- Alzato leggermente -->
                         <img src="images/cane_senza_sfondo.png" alt="Cane" class="dog-peek">
                         
-                        <!-- Box Info -->
                         <div class="info-box">
-                            <h3>Lo sapevi?</h3>
-                            <p>I cani riducono lo stress e migliorano l'umore. Affidati a chi li ama davvero!</p>
-                            <div style="display: flex; gap: 10px; margin-top: 10px; font-weight: bold; color: var(--primary);">
-                                <span><i class="fa-solid fa-heart"></i> Amore</span>
-                                <span><i class="fa-solid fa-shield-dog"></i> Sicurezza</span>
-                            </div>
+                            <h3 class="box-title">I miei servizi:</h3>
+                            <ul class="box-services">
+                                <li>Sessione educativa (a partire da 30 €);</li>
+                                <li>Percorso educativo base: 5 lezioni (a partire da 130 €);</li>
+                                <li>Passeggiate ed esplorazione (a partire da 10 €/h);</li>
+                                <li>Dog Sitter dedicato: cura e attenzione (prezzo da concordare).</li>
+                            </ul>
                         </div>
                     </div>
+                    <!-- Bottone spostato in basso a destra -->
+                    <button onclick="showPage('prenotazioni')" class="btn-accedi btn-bottom-right">Inizia il percorso</button>
                 </div>
             </div>
         </div>
