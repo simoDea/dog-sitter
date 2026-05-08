@@ -336,6 +336,115 @@
         .dog-wrapper {
             transform: translateY(-30px); /* Sposta tutto il gruppo verso l'alto */
         }
+
+        /* --- AGGIUNTE PER RESPONSIVENESS --- */
+
+        /* 1. Layout Base Fluido */
+        body {
+            height: 100vh;
+            overflow-x: hidden; /* Evita scroll orizzontale */
+        }
+
+        main {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+        }
+
+        /* 2. Container Home Flessibile */
+        .home-container {
+            display: flex;
+            flex-wrap: wrap; /* Permette agli elementi di andare sotto */
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            padding: 40px 20px;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .home-left, .home-right {
+            flex: 1 1 400px; /* Crescono, si rimpiccioliscono ma non scendono sotto i 400px */
+            min-width: 300px;
+            padding: 0;
+        }
+
+        .home-right {
+            align-items: center; /* Centra il cane su mobile */
+            height: auto;
+        }
+
+        /* 3. Immagine del Cane adattiva */
+        .dog-peek {
+            max-width: 100%;
+            height: auto;
+            width: 250px;
+        }
+
+        /* 4. MEDIA QUERIES per Mobile (< 768px) */
+        @media (max-width: 768px) {
+            aside {
+                transform: translateX(-100%); /* Nasconde la sidebar */
+                width: 100%; /* Occupa tutto lo schermo quando aperta */
+            }
+
+            aside.open {
+                transform: translateX(0);
+            }
+
+            main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .top-bar {
+                padding: 0 15px;
+                justify-content: space-between; /* Spazio per il menu hamburger */
+            }
+
+            .top-bar-title {
+                font-size: 1.2rem;
+                gap: 8px;
+            }
+
+            .brand-img { height: 30px; }
+
+            .home-title {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            .home-text-content p, .home-list li {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .home-list li::before {
+                position: static;
+                margin-right: 10px;
+            }
+
+            /* Bottone in basso - lo rendiamo fisso o centrato */
+            .btn-bottom-right {
+                position: relative;
+                bottom: 0;
+                right: 0;
+                margin: 40px auto;
+                display: block;
+                width: fit-content;
+            }
+            
+            /* Icona Menu per Mobile */
+            .menu-toggle {
+                display: block !important;
+                font-size: 1.5rem;
+                cursor: pointer;
+                z-index: 20;
+            }
+        }
+
+        /* Nascondi toggle su desktop */
+        .menu-toggle { display: none; }
     </style>
 </head>
 <body>
@@ -365,17 +474,19 @@
 
 <main>
     <div class="top-bar">
-    <!-- Titolo centrale con la tua immagine personalizzata -->
-    <div class="top-bar-title">
-        <img src="images/impronta_titolo.png" alt="Logo Zampa" class="brand-img">
-        <span>ZampaViva</span> 
-    </div>
+        <!-- Hamburger Menu (visibile solo su mobile) -->
+        <i class="fa-solid fa-bars menu-toggle" onclick="toggleSidebar()"></i>
 
-    <div class="user-profile" onclick="toggleAuth()">
-        <span id="user-display-name">Ospite (Clicca per Login)</span>
-        <img src="https://via.placeholder.com/40" alt="Profilo" class="user-avatar" id="user-img">
+        <div class="top-bar-title">
+            <img src="images/impronta_titolo.png" alt="Logo Zampa" class="brand-img">
+            <span>ZampaViva</span> 
+        </div>
+
+        <div class="user-profile" onclick="toggleAuth()">
+            <span id="user-display-name" class="desktop-only">Ospite</span>
+            <img src="https://via.placeholder.com/40" alt="Profilo" class="user-avatar" id="user-img">
+        </div>
     </div>
-</div>
 
     <div id="content-wrapper">
         <!-- PAGINA: DASHBOARD -->
@@ -508,6 +619,20 @@
             simulaLogin();
         }
     }
+
+    function toggleSidebar() {
+        const sidebar = document.querySelector('aside');
+        sidebar.classList.toggle('open');
+    }
+
+    // Chiudi la sidebar quando clicchi su una voce (su mobile)
+    document.querySelectorAll('nav li').forEach(li => {
+        li.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
+            }
+        });
+    });
 </script>
 
 </body>
