@@ -137,7 +137,7 @@
         }
 
         .home-left {
-            flex: 1;
+            flex: 3;
             padding-right: 40px;
         }
 
@@ -225,6 +225,69 @@
             width: 100%;
             display: block;
         }
+
+        /* Stile Testi Home */
+        .home-title {
+            font-size: 2.8rem;
+            line-height: 1.1;
+            color: #1e293b;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .home-intro p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #475569;
+            margin-bottom: 15px;
+        }
+
+        /* Griglia delle icone/servizi */
+        .features-grid {
+            display: grid;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 12px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: transform 0.2s;
+        }
+
+        .feature-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .feature-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            width: 30px;
+            text-align: center;
+        }
+
+        .feature-item strong {
+            display: block;
+            color: #1e293b;
+            font-size: 0.95rem;
+        }
+
+        .feature-item span {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Layout colonna sinistra */
+        .home-left {
+            flex: 1.2; /* Diamo un po' più di spazio al testo rispetto all'immagine */
+            padding-right: 50px;
+        }
     </style>
 </head>
 <body>
@@ -270,15 +333,46 @@
         <!-- PAGINA: HOME -->
         <div id="page-home" class="page-content active" style="background-color: #F6C7C7;">
             <div class="home-container">
-                <!-- Metà Sinistra: Presentazione -->
+               <!-- Metà Sinistra: Presentazione Professionale -->
                 <div class="home-left">
-                    <h1 style="font-size: 3rem; color: #1e293b; margin-bottom: 20px;">DogSitter Giulsu</h1>
-                    <p style="font-size: 1.2rem; line-height: 1.6; color: #475569; max-width: 500px;">
-                        Benvenuti nel mondo di Giulsu! Mi prendo cura dei tuoi amici a quattro zampe con amore e dedizione. 
-                        Che si tratti di una passeggiata al parco o di una compagnia serale, il tuo cucciolo sarà in mani sicure. 
-                        Professionalità, coccole e tanto divertimento assicurato per ogni razza e taglia.
-                    </p>
-                    <button onclick="showPage('prenotazioni')" class="btn-accedi" style="margin-top: 30px;">Scopri di più</button>
+                    <h1 class="home-title">Trasformate la vostra vita insieme verso un equilibrio perfetto</h1>
+                    
+                    <div class="home-intro">
+                        <p>
+                            Mi chiamo <strong>Giulia</strong>, sono un addestratrice cinofila certificata <strong>ENCI</strong> e vivo a Sesto San Giovanni. 
+                            La mia missione è mettere la mia competenza al servizio del benessere dei nostri amici a quattro zampe e dei loro proprietari.
+                        </p>
+                        <p>
+                            Credo fermamente che la cinofilia sia una questione di <strong>equilibrio</strong>. Amo dedicare il tempo a lunghe passeggiate esplorative e al gioco all'aria aperta, ma sono convinta che la vera armonia nasca tra le mura domestiche.
+                        </p>
+                    </div>
+
+                    <!-- Sezione Funzionalità Area Personale -->
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <div>
+                                <strong>Pagelline</strong>
+                                <span>Progressi e voti di ogni lezione.</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-camera-retro"></i>
+                            <div>
+                                <strong>Galleria</strong>
+                                <span>Le foto delle nostre avventure.</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <div>
+                                <strong>Prenotazioni</strong>
+                                <span>Calendario aggiornato in un click.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="showPage('prenotazioni')" class="btn-accedi" style="margin-top: 20px;">Inizia il percorso</button>
                 </div>
 
                 <!-- Metà Destra: Immagine + Box Info -->
