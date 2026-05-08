@@ -75,7 +75,7 @@
             border-bottom: 1px solid #e2e8f0;
         }
 
-        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+        .user-profile { display: flex; align-items: center; gap: 12px; cursor: pointer; z-index: 5; /* Assicura che il profilo sia sopra e cliccabile */}
         .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #eee; }
 
         /* Contenuto dinamico */
@@ -187,12 +187,46 @@
             margin-top: 0;
             color: var(--primary);
         }
+
+        /* Barra superiore migliorata */
+        .top-bar {
+            height: var(--topbar-height);
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* Spinge tutto a destra (il profilo) */
+            padding: 0 40px;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative; /* Questo è il segreto per tenere il titolo al centro */
+        }
+
+        .top-bar-title {
+            position: absolute;
+            /* Centra il titolo rispetto alla barra intera, non rispetto agli altri elementi */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%); 
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            white-space: nowrap; /* Impedisce al titolo di andare a capo */
+        }
+
+        /* Stile per la scritta Menu nella sidebar */
+        .logo { 
+            font-weight: 600; 
+            color: #94a3b8; /* Un grigio più sobrio per la parola Menu */
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px;
+            margin-bottom: 30px; 
+        }
     </style>
 </head>
 <body>
 
 <aside>
-    <div class="logo">DogSitter Giulsu</div>
+    <div class="logo">Menu</div>
     <nav>
         <ul>
             <li onclick="showPage('home')" id="menu-home" class="active"> 
@@ -216,6 +250,7 @@
 
 <main>
     <div class="top-bar">
+        <div class="top-bar-title">DogSitter Giulsu</div>
         <div class="user-profile" onclick="toggleAuth()">
             <span id="user-display-name">Ospite (Clicca per Login)</span>
             <img src="https://via.placeholder.com/40" alt="Profilo" class="user-avatar" id="user-img">
